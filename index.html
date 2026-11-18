@@ -51,7 +51,7 @@
       <div>
         <h1 class="text-lg font-bold text-slate-900 leading-tight tracking-tight flex items-center gap-2">
           Award Mailer Studio
-          <span class="text-xs bg-indigo-100 text-brand-700 px-2 py-0.5 rounded-full font-medium">v4.0 Round-Robin</span>
+          <span class="text-xs bg-indigo-100 text-brand-700 px-2 py-0.5 rounded-full font-medium">v5.5 MSHS Edition</span>
         </h1>
         <p class="text-xs text-slate-500">Phát hành khen thưởng tự động qua Gmail & Outlook 365</p>
       </div>
@@ -72,7 +72,7 @@
         </button>
       </div>
 
-      <!-- Cấu hình Cổng 1: Google Apps Script Webhook -->
+      <!-- Cổng 1: Google Apps Script Webhook -->
       <div id="googleConfigGroup" class="flex items-center gap-2">
         <div class="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 text-xs">
           <i data-lucide="link" class="w-4 h-4 text-slate-400"></i>
@@ -91,7 +91,7 @@
         </button>
       </div>
 
-      <!-- Cấu hình Cổng 2: Microsoft Outlook 365 (Textarea Multi-Token Luân Phiên) -->
+      <!-- Cổng 2: Microsoft Outlook 365 (Textarea Multi-Token Luân Phiên) -->
       <div id="outlookConfigGroup" class="hidden flex items-center gap-2">
         <div class="flex items-center gap-1.5 bg-sky-50 px-2.5 py-1 rounded-lg border border-sky-200 text-xs">
           <div class="flex flex-col">
@@ -129,7 +129,6 @@
       
       <!-- Thanh công cụ nhập liệu & Dispatch Control -->
       <div class="p-4 border-b border-slate-200 bg-slate-50/70 space-y-3 shrink-0">
-        <!-- Nút thao tác Import -->
         <div class="flex items-center justify-between gap-2 flex-wrap">
           <div class="flex items-center gap-2">
             <!-- Nạp Excel/CSV -->
@@ -236,70 +235,175 @@
               <i data-lucide="upload-cloud" class="w-4 h-4"></i>
             </div>
             <p class="text-xs font-semibold text-slate-700">Kéo thả ảnh giải thưởng hoặc click để chọn hàng loạt file</p>
-            <p class="text-[11px] text-slate-400">Thuật toán tự động chuẩn hóa tên file: <span class="font-mono bg-slate-100 px-1 py-0.5 rounded">11A3_NguyenVanAn.png</span> hoặc <span class="font-mono bg-slate-100 px-1 py-0.5 rounded">NguyenVanAn.jpg</span></p>
+            <p class="text-[11px] text-slate-400">Thuật toán tự động chuẩn hóa tên file: <span class="font-mono bg-slate-100 px-1 py-0.5 rounded">FPT001_NguyenVanAn.png</span> hoặc <span class="font-mono bg-slate-100 px-1 py-0.5 rounded">NguyenVanAn.jpg</span></p>
           </div>
         </div>
       </div>
 
-      <!-- Nội dung Tab 2: Studio Canvas vẽ phôi -->
+      <!-- Nội dung Tab 2: Studio Canvas vẽ phôi (NÂNG CẤP TRƯỜNG MSHS & BẢNG ĐIỀU KHIỂN 4 CỘT) -->
       <div id="tabContent2" class="hidden p-4 border-b border-slate-200 bg-slate-50 shrink-0 space-y-3">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <label class="cursor-pointer inline-flex items-center gap-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-2.5 py-1.5 rounded text-xs font-medium shadow-sm">
+        <!-- Hàng 1: Nạp phôi, Đặt lại & Điều khiển Font, Scale, Nút Xuất ảnh -->
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2 flex-wrap">
+            <label class="cursor-pointer inline-flex items-center gap-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-2.5 py-1.5 rounded-lg text-xs font-medium shadow-sm transition">
               <i data-lucide="image-plus" class="w-3.5 h-3.5 text-indigo-600"></i>
-              Tải phôi giấy khen riêng
+              Tải phôi riêng
               <input type="file" id="templateFileInput" accept="image/*" class="hidden">
             </label>
-            <button id="btnResetDefaultCanvas" class="text-xs text-slate-600 hover:text-slate-900 font-medium">Dùng phôi mẫu hoàng gia</button>
+            <button id="btnResetDefaultCanvas" class="text-xs text-slate-600 hover:text-slate-900 font-medium px-1">Dùng phôi hoàng gia</button>
+            <span id="canvasDimensionBadge" class="text-[10px] font-mono text-slate-500 bg-slate-200/80 px-2 py-0.5 rounded">900 x 630px</span>
           </div>
 
-          <button id="btnApplyCanvasAll" class="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow transition">
-            <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
-            Xuất ảnh giấy khen cho TẤT CẢ học sinh
-          </button>
+          <!-- Bảng điều khiển Font chữ & Scale độ nét -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <div class="flex items-center gap-1.5 bg-white border border-slate-300 px-2 py-1 rounded-lg text-xs shadow-sm">
+              <i data-lucide="type" class="w-3.5 h-3.5 text-slate-500"></i>
+              <span class="text-slate-500 font-medium text-[11px]">Font:</span>
+              <select id="canvasFont" class="bg-transparent font-medium text-slate-800 outline-none cursor-pointer text-xs">
+                <option value="Times New Roman" selected>Times New Roman</option>
+                <option value="Arial">Arial</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Courier New">Courier New</option>
+              </select>
+            </div>
+
+            <div class="flex items-center gap-1.5 bg-white border border-slate-300 px-2 py-1 rounded-lg text-xs shadow-sm">
+              <i data-lucide="maximize-2" class="w-3.5 h-3.5 text-indigo-600"></i>
+              <span class="text-slate-500 font-medium text-[11px]">Độ nét:</span>
+              <select id="canvasScale" class="bg-transparent font-semibold text-indigo-700 outline-none cursor-pointer text-xs">
+                <option value="1">1x (Gốc 900p)</option>
+                <option value="2" selected>2x (Nét cao HD)</option>
+                <option value="3">3x (Siêu nét 4K)</option>
+              </select>
+            </div>
+
+            <button id="btnApplyCanvasAll" class="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow transition">
+              <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
+              Xuất ảnh cho TẤT CẢ
+            </button>
+          </div>
         </div>
 
-        <!-- Slider chỉnh toạ độ Y và cỡ chữ -->
-        <div class="grid grid-cols-3 gap-3 bg-white p-3 rounded-lg border border-slate-200 text-xs">
-          <!-- Họ tên -->
-          <div class="space-y-1">
-            <span class="font-semibold text-slate-700 flex items-center justify-between">
-              Họ Tên (Y)
-              <span id="lblYName" class="font-mono text-slate-500">240px</span>
-            </span>
-            <input type="range" id="rngYName" min="50" max="500" value="240" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
-            <div class="flex items-center gap-2 pt-1">
-              <span class="text-[10px] text-slate-400">Size:</span>
-              <input type="number" id="numSizeName" value="34" min="16" max="72" class="w-14 border rounded px-1.5 py-0.5 text-xs text-center font-mono">
-              <input type="color" id="colName" value="#854d0e" class="w-6 h-6 rounded border cursor-pointer p-0">
+        <!-- Hàng 2: Khung điều khiển tọa độ 4 Cột (Họ Tên, MSHS, Lớp, Giải Thưởng) -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+          <!-- Cột 1: HỌ TÊN -->
+          <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between font-semibold text-slate-800 border-b pb-1">
+              <span>Họ và Tên</span>
+              <select id="alignName" class="text-[10px] bg-slate-50 border border-slate-200 rounded px-1 py-0.5 outline-none font-sans text-slate-700 cursor-pointer">
+                <option value="center" selected>Giữa</option>
+                <option value="left">Trái</option>
+                <option value="right">Phải</option>
+              </select>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[10px] text-slate-500 mb-0.5">
+                <span>X:</span>
+                <span id="lblXName" class="font-mono text-indigo-600 font-semibold">450px</span>
+              </div>
+              <input type="range" id="rngXName" min="0" max="900" value="450" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[10px] text-slate-500 mb-0.5">
+                <span>Y:</span>
+                <span id="lblYName" class="font-mono text-brand-600 font-semibold">220px</span>
+              </div>
+              <input type="range" id="rngYName" min="0" max="630" value="220" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
+            </div>
+            <div class="flex items-center justify-between pt-1 border-t border-slate-100">
+              <input type="number" id="numSizeName" value="34" min="8" max="200" title="Cỡ chữ" class="w-12 border rounded px-1 py-0.5 text-xs text-center font-mono">
+              <input type="color" id="colName" value="#854d0e" title="Màu chữ" class="w-5 h-5 rounded border cursor-pointer p-0">
             </div>
           </div>
 
-          <!-- Lớp -->
-          <div class="space-y-1">
-            <span class="font-semibold text-slate-700 flex items-center justify-between">
-              Lớp (Y)
-              <span id="lblYClass" class="font-mono text-slate-500">290px</span>
-            </span>
-            <input type="range" id="rngYClass" min="50" max="500" value="290" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
-            <div class="flex items-center gap-2 pt-1">
-              <span class="text-[10px] text-slate-400">Size:</span>
-              <input type="number" id="numSizeClass" value="20" min="12" max="50" class="w-14 border rounded px-1.5 py-0.5 text-xs text-center font-mono">
-              <input type="color" id="colClass" value="#1e293b" class="w-6 h-6 rounded border cursor-pointer p-0">
+          <!-- Cột 2: MSHS (MÃ SỐ HỌC SINH MỚI) -->
+          <div class="space-y-1 bg-white p-2.5 rounded-lg border border-indigo-200 shadow-sm bg-indigo-50/20">
+            <div class="flex items-center justify-between font-semibold text-indigo-900 border-b border-indigo-100 pb-1">
+              <span class="flex items-center gap-1"><i data-lucide="badge-check" class="w-3 h-3 text-indigo-600"></i> MSHS</span>
+              <select id="alignMshs" class="text-[10px] bg-white border border-indigo-200 rounded px-1 py-0.5 outline-none font-sans text-indigo-800 cursor-pointer">
+                <option value="center" selected>Giữa</option>
+                <option value="left">Trái</option>
+                <option value="right">Phải</option>
+              </select>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[10px] text-slate-500 mb-0.5">
+                <span>X:</span>
+                <span id="lblXMshs" class="font-mono text-indigo-600 font-semibold">450px</span>
+              </div>
+              <input type="range" id="rngXMshs" min="0" max="900" value="450" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[10px] text-slate-500 mb-0.5">
+                <span>Y:</span>
+                <span id="lblYMshs" class="font-mono text-brand-600 font-semibold">260px</span>
+              </div>
+              <input type="range" id="rngYMshs" min="0" max="630" value="260" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
+            </div>
+            <div class="flex items-center justify-between pt-1 border-t border-slate-100">
+              <input type="number" id="numSizeMshs" value="18" min="8" max="200" title="Cỡ chữ MSHS" class="w-12 border rounded px-1 py-0.5 text-xs text-center font-mono">
+              <input type="color" id="colMshs" value="#475569" title="Màu chữ MSHS" class="w-5 h-5 rounded border cursor-pointer p-0">
             </div>
           </div>
 
-          <!-- Tên giải -->
-          <div class="space-y-1">
-            <span class="font-semibold text-slate-700 flex items-center justify-between">
-              Tên Giải Thưởng (Y)
-              <span id="lblYAward" class="font-mono text-slate-500">350px</span>
-            </span>
-            <input type="range" id="rngYAward" min="50" max="500" value="350" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
-            <div class="flex items-center gap-2 pt-1">
-              <span class="text-[10px] text-slate-400">Size:</span>
-              <input type="number" id="numSizeAward" value="28" min="14" max="60" class="w-14 border rounded px-1.5 py-0.5 text-xs text-center font-mono">
-              <input type="color" id="colAward" value="#dc2626" class="w-6 h-6 rounded border cursor-pointer p-0">
+          <!-- Cột 3: LỚP HỌC -->
+          <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between font-semibold text-slate-800 border-b pb-1">
+              <span>Lớp Học</span>
+              <select id="alignClass" class="text-[10px] bg-slate-50 border border-slate-200 rounded px-1 py-0.5 outline-none font-sans text-slate-700 cursor-pointer">
+                <option value="center" selected>Giữa</option>
+                <option value="left">Trái</option>
+                <option value="right">Phải</option>
+              </select>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[10px] text-slate-500 mb-0.5">
+                <span>X:</span>
+                <span id="lblXClass" class="font-mono text-indigo-600 font-semibold">450px</span>
+              </div>
+              <input type="range" id="rngXClass" min="0" max="900" value="450" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[10px] text-slate-500 mb-0.5">
+                <span>Y:</span>
+                <span id="lblYClass" class="font-mono text-brand-600 font-semibold">300px</span>
+              </div>
+              <input type="range" id="rngYClass" min="0" max="630" value="300" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
+            </div>
+            <div class="flex items-center justify-between pt-1 border-t border-slate-100">
+              <input type="number" id="numSizeClass" value="20" min="8" max="200" title="Cỡ chữ Lớp" class="w-12 border rounded px-1 py-0.5 text-xs text-center font-mono">
+              <input type="color" id="colClass" value="#1e293b" title="Màu chữ Lớp" class="w-5 h-5 rounded border cursor-pointer p-0">
+            </div>
+          </div>
+
+          <!-- Cột 4: TÊN GIẢI THƯỞNG -->
+          <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between font-semibold text-slate-800 border-b pb-1">
+              <span>Giải Thưởng</span>
+              <select id="alignAward" class="text-[10px] bg-slate-50 border border-slate-200 rounded px-1 py-0.5 outline-none font-sans text-slate-700 cursor-pointer">
+                <option value="center" selected>Giữa</option>
+                <option value="left">Trái</option>
+                <option value="right">Phải</option>
+              </select>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[10px] text-slate-500 mb-0.5">
+                <span>X:</span>
+                <span id="lblXAward" class="font-mono text-indigo-600 font-semibold">450px</span>
+              </div>
+              <input type="range" id="rngXAward" min="0" max="900" value="450" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[10px] text-slate-500 mb-0.5">
+                <span>Y:</span>
+                <span id="lblYAward" class="font-mono text-brand-600 font-semibold">360px</span>
+              </div>
+              <input type="range" id="rngYAward" min="0" max="630" value="360" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
+            </div>
+            <div class="flex items-center justify-between pt-1 border-t border-slate-100">
+              <input type="number" id="numSizeAward" value="28" min="8" max="200" title="Cỡ chữ Giải thưởng" class="w-12 border rounded px-1 py-0.5 text-xs text-center font-mono">
+              <input type="color" id="colAward" value="#dc2626" title="Màu chữ Giải thưởng" class="w-5 h-5 rounded border cursor-pointer p-0">
             </div>
           </div>
         </div>
@@ -320,7 +424,7 @@
             <tr>
               <th class="py-2.5 px-3 font-semibold w-12 text-center">STT</th>
               <th class="py-2.5 px-3 font-semibold w-20">Lớp</th>
-              <th class="py-2.5 px-3 font-semibold">Họ và Tên</th>
+              <th class="py-2.5 px-3 font-semibold">Họ và Tên / MSHS</th>
               <th class="py-2.5 px-3 font-semibold">Tên Giải Thưởng</th>
               <th class="py-2.5 px-3 font-semibold">Ảnh Khen Thưởng</th>
               <th class="py-2.5 px-3 font-semibold w-24">Trạng Thái</th>
@@ -354,28 +458,28 @@
           </button>
         </div>
 
-        <!-- Tiêu đề Email -->
+        <!-- Tiêu đề Email (Hỗ trợ {{MSHS}}) -->
         <div>
           <label class="block text-[11px] font-semibold text-slate-600 mb-1">Tiêu Đề Email (Subject)</label>
           <input 
             type="text" 
             id="emailSubjectInput" 
-            value="[Chúc Mừng] Trao tặng giấy khen {{TenGiaiThuong}} - Học sinh {{HoTen}} (Lớp {{Lop}})" 
+            value="[Chúc Mừng] Trao tặng giấy khen {{TenGiaiThuong}} - Học sinh {{HoTen}} (MSHS: {{MSHS}} - Lớp {{Lop}})" 
             class="w-full text-xs px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:bg-white focus:ring-1 focus:ring-brand-500 outline-none"
           />
         </div>
 
-        <!-- Soạn thảo HTML Body -->
+        <!-- Soạn thảo HTML Body (Hỗ trợ {{MSHS}}) -->
         <div>
           <div class="flex items-center justify-between mb-1">
-            <label class="text-[11px] font-semibold text-slate-600">Nội Dung Thư (HTML hỗ trợ biến {{HoTen}}, {{Lop}}, {{TenGiaiThuong}})</label>
+            <label class="text-[11px] font-semibold text-slate-600">Nội Dung Thư (Biến: {{HoTen}}, {{MSHS}}, {{Lop}}, {{TenGiaiThuong}})</label>
             <span class="text-[10px] text-slate-400">Nhúng ảnh: <code>&lt;img src="cid:awardImage"&gt;</code></span>
           </div>
           <textarea 
             id="emailHtmlTextarea" 
             rows="3" 
             class="w-full text-xs font-mono p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:bg-white focus:ring-1 focus:ring-brand-500 outline-none resize-none leading-relaxed"
-          >&lt;p&gt;Thân gửi em &lt;b&gt;{{HoTen}}&lt;/b&gt; (Lớp &lt;b&gt;{{Lop}}&lt;/b&gt;),&lt;/p&gt;
+          >&lt;p&gt;Thân gửi em &lt;b&gt;{{HoTen}}&lt;/b&gt; (MSHS: &lt;b&gt;{{MSHS}}&lt;/b&gt; - Lớp &lt;b&gt;{{Lop}}&lt;/b&gt;),&lt;/p&gt;
 &lt;p&gt;Nhà trường và Ban Thi Đua nhiệt liệt chúc mừng em đã xuất sắc đạt thành tích: &lt;span style="color:#d97706; font-weight:bold;"&gt;{{TenGiaiThuong}}&lt;/span&gt;.&lt;/p&gt;
 &lt;p&gt;Giấy khen chính thức đã được gửi kèm file đính kèm chất lượng cao và hiển thị bên dưới:&lt;/p&gt;</textarea>
         </div>
@@ -447,7 +551,7 @@
         Sao chép dữ liệu từ Google Sheets/Excel rồi dán vào ô bên dưới. Bộ quét Smart Scanner sẽ tự động tìm dòng Header dù có dòng chú thích hay tiêu đề phía trên:
       </p>
 
-      <textarea id="pasteTextarea" rows="6" placeholder="class,name,email,award&#10;11A3,Nguyễn Văn An,longha8241@gmail.com,Giải Nhất - Sáng Tạo Công Nghệ&#10;11A3,Trần Thị Bình,binh.tt@example.com,Giải Nhì - Tư Duy Thuật Toán" class="w-full text-xs font-mono p-3 bg-slate-50 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white"></textarea>
+      <textarea id="pasteTextarea" rows="6" placeholder="class,mshs,name,email,award&#10;11A3,FPT001,Nguyễn Văn An,longha8241@gmail.com,Giải Nhất - Sáng Tạo Công Nghệ&#10;11A3,FPT002,Trần Thị Bình,binh.tt@example.com,Giải Nhì - Tư Duy Thuật Toán" class="w-full text-xs font-mono p-3 bg-slate-50 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white"></textarea>
 
       <div class="flex justify-end gap-2">
         <button onclick="document.getElementById('pasteModal').classList.add('hidden')" class="px-4 py-2 border border-slate-300 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50">Hủy</button>
@@ -613,6 +717,8 @@
     document.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
       initGatewaySettings();
+      setupCanvasStudioControls();
+      updateSlidersRange(900, 630);
       renderDefaultTemplateToCanvas();
       updateClassFilters();
       updateStatistics();
@@ -622,17 +728,14 @@
 
     // 1. Quản lý Cổng gửi và Thông tin xác thực (LocalStorage)
     function initGatewaySettings() {
-      // Khôi phục cổng đã lưu
       const savedGateway = localStorage.getItem('award_mailer_gateway') || 'google';
       setGateway(savedGateway);
 
-      // Khôi phục Webhook Google
       const savedWebhook = localStorage.getItem('award_mailer_webhook');
       if (savedWebhook) {
         document.getElementById('webhookUrlInput').value = savedWebhook;
       }
 
-      // Khôi phục Danh sách Graph Tokens Outlook
       const savedGraphTokens = localStorage.getItem('award_mailer_graph_tokens');
       if (savedGraphTokens) {
         const textarea = document.getElementById('graphTokensTextarea');
@@ -678,16 +781,12 @@
     document.getElementById('gateBtnGoogle').addEventListener('click', () => setGateway('google'));
     document.getElementById('gateBtnOutlook').addEventListener('click', () => setGateway('outlook'));
 
-    // Lưu Webhook URL
     document.getElementById('btnSaveWebhook').addEventListener('click', () => {
       const url = document.getElementById('webhookUrlInput').value.trim();
       localStorage.setItem('award_mailer_webhook', url);
       alert('Đã lưu Google Apps Script Webhook URL thành công!');
     });
 
-    // =========================================================================
-    // HÀM TRÍCH XUẤT VÀ QUẢN LÝ DANH SÁCH TOKENS HỢP LỆ (ROUND-ROBIN)
-    // =========================================================================
     function getValidGraphTokens() {
       const textarea = document.getElementById('graphTokensTextarea');
       if (!textarea) return [];
@@ -711,7 +810,6 @@
 
     document.getElementById('graphTokensTextarea').addEventListener('input', updateTokenCountBadge);
 
-    // Lưu danh sách Graph Tokens
     document.getElementById('btnSaveGraphTokens').addEventListener('click', () => {
       const textarea = document.getElementById('graphTokensTextarea');
       const val = textarea.value;
@@ -763,6 +861,12 @@
       return ['name', 'hoten', 'hovaten', 'fullname', 'ten', 'tenhocsinh', 'hotenhocsinh', 'tensinhvien', 'studentname', 'student'].includes(s);
     }
 
+    // NHẬN DIỆN CỘT MSHS (MÃ SỐ HỌC SINH)
+    function isMshsHeader(s) {
+      if (!s || s.length > 20) return false;
+      return ['mshs', 'maso', 'mahs', 'mahocsinh', 'masohocsinh', 'id', 'studentid', 'code', 'mahocvien'].includes(s);
+    }
+
     function isEmailHeader(s) {
       if (!s || s.length > 20) return false;
       return ['email', 'mail', 'thudientu', 'diachiemail', 'emailaddress'].includes(s);
@@ -774,7 +878,7 @@
     }
 
     // =========================================================================
-    // 3. THUẬT TOÁN QUÉT DÒNG HEADER THÔNG MINH (SMART ROW SCANNER V3)
+    // 3. THUẬT TOÁN QUÉT DÒNG HEADER THÔNG MINH (TÍCH HỢP MSHS)
     // =========================================================================
     function parseRaw2DArray(rawRows) {
       if (!rawRows || !Array.isArray(rawRows) || rawRows.length === 0) {
@@ -783,6 +887,7 @@
 
       let headerRowIndex = -1;
       let colLop = -1;
+      let colMshs = -1;
       let colHoTen = -1;
       let colEmail = -1;
       let colGiai = -1;
@@ -791,7 +896,7 @@
         const row = rawRows[r];
         if (!Array.isArray(row) || row.length === 0) continue;
 
-        let fLop = -1, fHoTen = -1, fEmail = -1, fGiai = -1;
+        let fLop = -1, fMshs = -1, fHoTen = -1, fEmail = -1, fGiai = -1;
 
         for (let c = 0; c < row.length; c++) {
           const rawCell = String(row[c] || '').trim();
@@ -802,6 +907,8 @@
 
           if (fGiai === -1 && isAwardHeader(cleanStr)) {
             fGiai = c;
+          } else if (fMshs === -1 && isMshsHeader(cleanStr)) {
+            fMshs = c;
           } else if (fHoTen === -1 && isNameHeader(cleanStr)) {
             fHoTen = c;
           } else if (fEmail === -1 && isEmailHeader(cleanStr)) {
@@ -811,12 +918,13 @@
           }
         }
 
-        const found = [fLop, fHoTen, fEmail, fGiai].filter(idx => idx !== -1);
+        const found = [fLop, fMshs, fHoTen, fEmail, fGiai].filter(idx => idx !== -1);
         const uniqueSet = new Set(found);
 
         if (found.length >= 2 && uniqueSet.size === found.length && (fHoTen !== -1 || fEmail !== -1)) {
           headerRowIndex = r;
           colLop = fLop;
+          colMshs = fMshs;
           colHoTen = fHoTen;
           colEmail = fEmail;
           colGiai = fGiai;
@@ -836,6 +944,7 @@
         if (!Array.isArray(row) || row.length === 0) continue;
 
         const valLop = (colLop !== -1 && row[colLop] !== undefined) ? String(row[colLop]).trim() : '';
+        const valMshs = (colMshs !== -1 && row[colMshs] !== undefined) ? String(row[colMshs]).trim() : '';
         const valHoTen = (colHoTen !== -1 && row[colHoTen] !== undefined) ? String(row[colHoTen]).trim() : '';
         const valEmail = (colEmail !== -1 && row[colEmail] !== undefined) ? String(row[colEmail]).trim() : '';
         const valGiai = (colGiai !== -1 && row[colGiai] !== undefined) ? String(row[colGiai]).trim() : 'Khen Thưởng Tiêu Biểu';
@@ -864,6 +973,7 @@
 
         parsed.push({
           Lop: valLop || currentLopGroup || '11A3',
+          mshs: valMshs || '',
           HoTen: valHoTen,
           Email: valEmail,
           TenGiaiThuong: valGiai || 'Khen Thưởng Tiêu Biểu',
@@ -907,7 +1017,7 @@
             renderTable();
             renderLivePreview();
             updateStatistics();
-            alert(`Đã nhận diện thành công ${students.length} học sinh!\n• Dòng Header tại hàng: ${result.headerRowIndex + 1}\n• Dữ liệu phân bổ chính xác theo cột Lớp, Họ Tên, Email, Giải Thưởng.`);
+            alert(`Đã nhận diện thành công ${students.length} học sinh!\n• Dòng Header tại hàng: ${result.headerRowIndex + 1}\n• Dữ liệu phân bổ chính xác theo cột Lớp, MSHS, Họ Tên, Email, Giải Thưởng.`);
           } else {
             alert('Không tìm thấy bản ghi học sinh hợp lệ nào bên dưới dòng tiêu đề.');
           }
@@ -959,21 +1069,21 @@
       }
     });
 
-    // 6. Nạp dữ liệu mẫu
+    // 6. Nạp dữ liệu mẫu (Kèm mã MSHS FPT001 - FPT012)
     document.getElementById('btnLoadSample').addEventListener('click', () => {
       students = [
-        { Lop: "11A3", HoTen: "Nguyễn Văn An", Email: "longha8241@gmail.com", TenGiaiThuong: "Giải Nhất - Sáng Tạo Công Nghệ", imageBase64: null, status: "pending", errorMsg: "" },
-        { Lop: "11A3", HoTen: "Trần Thị Bình", Email: "binh.tt@example.com", TenGiaiThuong: "Giải Nhì - Tư Duy Thuật Toán", imageBase64: null, status: "pending", errorMsg: "" },
-        { Lop: "11A3", HoTen: "Lê Hoàng Cường", Email: "cuong.lh@example.com", TenGiaiThuong: "Giải Ba - Thiết Kế Giao Diện", imageBase64: null, status: "pending", errorMsg: "" },
-        { Lop: "11A3", HoTen: "Phạm Minh Dũng", Email: "dung.pm@example.com", TenGiaiThuong: "Giải Khuyến Khích - Đam Mê AI", imageBase64: null, status: "pending", errorMsg: "" },
-        { Lop: "11A3", HoTen: "Hoàng Ngọc Ánh", Email: "anh.hn@example.com", TenGiaiThuong: "Giải Phong Cách Số", imageBase64: null, status: "pending", errorMsg: "" },
-        { Lop: "11A3", HoTen: "Vũ Đức Thắng", Email: "thang.vd@example.com", TenGiaiThuong: "Giải Cống Hiến Đội Nhóm", imageBase64: null, status: "pending", errorMsg: "" },
-        { Lop: "12A1", HoTen: "Đặng Quốc Bảo", Email: "bao.dq@example.com", TenGiaiThuong: "Giải Nhất - Sáng Tạo Công Nghệ", imageBase64: null, status: "pending", errorMsg: "" },
-        { Lop: "12A1", HoTen: "Bùi Phương Chi", Email: "chi.bp@example.com", TenGiaiThuong: "Giải Nhì - Tư Duy Thuật Toán", imageBase64: null, status: "pending", errorMsg: "" },
-        { Lop: "12A1", HoTen: "Đỗ Gia Huy", Email: "huy.dg@example.com", TenGiaiThuong: "Giải Ba - Thiết Kế Giao Diện", imageBase64: null, status: "pending", errorMsg: "" },
-        { Lop: "12A1", HoTen: "Ngô Thanh Thảo", Email: "thao.nt@example.com", TenGiaiThuong: "Giải Khuyến Khích - Đam Mê AI", imageBase64: null, status: "pending", errorMsg: "" },
-        { Lop: "12A1", HoTen: "Lý Tuấn Kiệt", Email: "kiet.lt@example.com", TenGiaiThuong: "Giải Phong Cách Số", imageBase64: null, status: "pending", errorMsg: "" },
-        { Lop: "12A1", HoTen: "Trương Mỹ Linh", Email: "linh.tm@example.com", TenGiaiThuong: "Giải Cống Hiến Đội Nhóm", imageBase64: null, status: "pending", errorMsg: "" }
+        { Lop: "11A3", mshs: "FPT001", HoTen: "Nguyễn Văn An", Email: "longha8241@gmail.com", TenGiaiThuong: "Giải Nhất - Sáng Tạo Công Nghệ", imageBase64: null, status: "pending", errorMsg: "" },
+        { Lop: "11A3", mshs: "FPT002", HoTen: "Trần Thị Bình", Email: "binh.tt@example.com", TenGiaiThuong: "Giải Nhì - Tư Duy Thuật Toán", imageBase64: null, status: "pending", errorMsg: "" },
+        { Lop: "11A3", mshs: "FPT003", HoTen: "Lê Hoàng Cường", Email: "cuong.lh@example.com", TenGiaiThuong: "Giải Ba - Thiết Kế Giao Diện", imageBase64: null, status: "pending", errorMsg: "" },
+        { Lop: "11A3", mshs: "FPT004", HoTen: "Phạm Minh Dũng", Email: "dung.pm@example.com", TenGiaiThuong: "Giải Khuyến Khích - Đam Mê AI", imageBase64: null, status: "pending", errorMsg: "" },
+        { Lop: "11A3", mshs: "FPT005", HoTen: "Hoàng Ngọc Ánh", Email: "anh.hn@example.com", TenGiaiThuong: "Giải Phong Cách Số", imageBase64: null, status: "pending", errorMsg: "" },
+        { Lop: "11A3", mshs: "FPT006", HoTen: "Vũ Đức Thắng", Email: "thang.vd@example.com", TenGiaiThuong: "Giải Cống Hiến Đội Nhóm", imageBase64: null, status: "pending", errorMsg: "" },
+        { Lop: "12A1", mshs: "FPT007", HoTen: "Đặng Quốc Bảo", Email: "bao.dq@example.com", TenGiaiThuong: "Giải Nhất - Sáng Tạo Công Nghệ", imageBase64: null, status: "pending", errorMsg: "" },
+        { Lop: "12A1", mshs: "FPT008", HoTen: "Bùi Phương Chi", Email: "chi.bp@example.com", TenGiaiThuong: "Giải Nhì - Tư Duy Thuật Toán", imageBase64: null, status: "pending", errorMsg: "" },
+        { Lop: "12A1", mshs: "FPT009", HoTen: "Đỗ Gia Huy", Email: "huy.dg@example.com", TenGiaiThuong: "Giải Ba - Thiết Kế Giao Diện", imageBase64: null, status: "pending", errorMsg: "" },
+        { Lop: "12A1", mshs: "FPT010", HoTen: "Ngô Thanh Thảo", Email: "thao.nt@example.com", TenGiaiThuong: "Giải Khuyến Khích - Đam Mê AI", imageBase64: null, status: "pending", errorMsg: "" },
+        { Lop: "12A1", mshs: "FPT011", HoTen: "Lý Tuấn Kiệt", Email: "kiet.lt@example.com", TenGiaiThuong: "Giải Phong Cách Số", imageBase64: null, status: "pending", errorMsg: "" },
+        { Lop: "12A1", mshs: "FPT012", HoTen: "Trương Mỹ Linh", Email: "linh.tm@example.com", TenGiaiThuong: "Giải Cống Hiến Đội Nhóm", imageBase64: null, status: "pending", errorMsg: "" }
       ];
 
       autoGenerateCertificatesForAll();
@@ -1036,11 +1146,13 @@
 
         const targetStudent = students.find(s => {
           const cleanName = normalizeText(s.HoTen);
+          const cleanMshs = normalizeText(s.mshs);
           const cleanClass = normalizeText(s.Lop);
           const combined1 = cleanClass + cleanName;
           const combined2 = cleanName + cleanClass;
 
-          return cleanFileName.includes(cleanName) || 
+          return (cleanMshs && cleanFileName.includes(cleanMshs)) ||
+                 cleanFileName.includes(cleanName) || 
                  cleanFileName === combined1 || 
                  cleanFileName === combined2 ||
                  cleanName.includes(cleanFileName);
@@ -1086,154 +1198,299 @@
       e.target.value = '';
     });
 
-    // 8. CANVAS STUDIO: VẼ GIẤY KHEN (TAB 2)
+    // =========================================================================
+    // 8. CANVAS STUDIO NÂNG CẤP V5.5: HỖ TRỢ ĐIỀU KHIỂN & VẼ MSHS ĐỘC LẬP
+    // =========================================================================
     const hiddenCanvas = document.getElementById('hiddenStudioCanvas');
     const ctx = hiddenCanvas.getContext('2d');
 
+    // Controls Họ Tên
+    const rngXName = document.getElementById('rngXName');
     const rngYName = document.getElementById('rngYName');
-    const rngYClass = document.getElementById('rngYClass');
-    const rngYAward = document.getElementById('rngYAward');
+    const lblXName = document.getElementById('lblXName');
+    const lblYName = document.getElementById('lblYName');
     const numSizeName = document.getElementById('numSizeName');
-    const numSizeClass = document.getElementById('numSizeClass');
-    const numSizeAward = document.getElementById('numSizeAward');
     const colName = document.getElementById('colName');
+    const alignName = document.getElementById('alignName');
+
+    // Controls MSHS
+    const rngXMshs = document.getElementById('rngXMshs');
+    const rngYMshs = document.getElementById('rngYMshs');
+    const lblXMshs = document.getElementById('lblXMshs');
+    const lblYMshs = document.getElementById('lblYMshs');
+    const numSizeMshs = document.getElementById('numSizeMshs');
+    const colMshs = document.getElementById('colMshs');
+    const alignMshs = document.getElementById('alignMshs');
+
+    // Controls Lớp
+    const rngXClass = document.getElementById('rngXClass');
+    const rngYClass = document.getElementById('rngYClass');
+    const lblXClass = document.getElementById('lblXClass');
+    const lblYClass = document.getElementById('lblYClass');
+    const numSizeClass = document.getElementById('numSizeClass');
     const colClass = document.getElementById('colClass');
+    const alignClass = document.getElementById('alignClass');
+
+    // Controls Tên Giải Thưởng
+    const rngXAward = document.getElementById('rngXAward');
+    const rngYAward = document.getElementById('rngYAward');
+    const lblXAward = document.getElementById('lblXAward');
+    const lblYAward = document.getElementById('lblYAward');
+    const numSizeAward = document.getElementById('numSizeAward');
     const colAward = document.getElementById('colAward');
+    const alignAward = document.getElementById('alignAward');
 
-    [rngYName, rngYClass, rngYAward, numSizeName, numSizeClass, numSizeAward, colName, colClass, colAward].forEach(el => {
-      el.addEventListener('input', () => {
-        const lblName = document.getElementById('lblYName');
-        const lblClass = document.getElementById('lblYClass');
-        const lblAward = document.getElementById('lblYAward');
+    // Controls Phông & Scale
+    const canvasFontSelect = document.getElementById('canvasFont');
+    const canvasScaleSelect = document.getElementById('canvasScale');
+    const canvasDimensionBadge = document.getElementById('canvasDimensionBadge');
 
-        if (lblName) lblName.textContent = rngYName.value + 'px';
-        if (lblClass) lblClass.textContent = rngYClass.value + 'px';
-        if (lblAward) lblAward.textContent = rngYAward.value + 'px';
-
-        if (selectedStudentIndex >= 0 && selectedStudentIndex < students.length) {
-          students[selectedStudentIndex].imageBase64 = generateCanvasCertificate(students[selectedStudentIndex]);
-          renderLivePreview();
-          renderTable();
+    // HÀM MỞ KHÓA GIỚI HẠN TỌA ĐỘ THEO KÍCH THƯỚC ẢNH PHÔI THỰC TẾ
+    function updateSlidersRange(actualWidth, actualHeight) {
+      [rngXName, rngXMshs, rngXClass, rngXAward].forEach(rng => {
+        if (!rng) return;
+        rng.max = actualWidth;
+        if (parseInt(rng.value, 10) > actualWidth || rng.value === "450") {
+          rng.value = Math.round(actualWidth / 2);
         }
       });
-    });
 
-    document.getElementById('templateFileInput').addEventListener('change', function(e) {
-      const file = e.target.files[0];
+      [rngYName, rngYMshs, rngYClass, rngYAward].forEach(rng => {
+        if (!rng) return;
+        rng.max = actualHeight;
+        if (parseInt(rng.value, 10) > actualHeight) {
+          rng.value = Math.min(actualHeight - 30, Math.round(actualHeight * 0.5));
+        }
+      });
+
+      if (lblXName) lblXName.textContent = rngXName.value + 'px';
+      if (lblYName) lblYName.textContent = rngYName.value + 'px';
+      if (lblXMshs) lblXMshs.textContent = rngXMshs.value + 'px';
+      if (lblYMshs) lblYMshs.textContent = rngYMshs.value + 'px';
+      if (lblXClass) lblXClass.textContent = rngXClass.value + 'px';
+      if (lblYClass) lblYClass.textContent = rngYClass.value + 'px';
+      if (lblXAward) lblXAward.textContent = rngXAward.value + 'px';
+      if (lblYAward) lblYAward.textContent = rngYAward.value + 'px';
+
+      if (canvasDimensionBadge) {
+        canvasDimensionBadge.textContent = `${actualWidth} x ${actualHeight}px`;
+      }
+    }
+
+    // CẬP NHẬT LIVE PREVIEW TỨC THÌ (REAL-TIME RENDERING)
+    function updateCanvasPreview() {
+      if (lblXName) lblXName.textContent = rngXName.value + 'px';
+      if (lblYName) lblYName.textContent = rngYName.value + 'px';
+      if (lblXMshs) lblXMshs.textContent = rngXMshs.value + 'px';
+      if (lblYMshs) lblYMshs.textContent = rngYMshs.value + 'px';
+      if (lblXClass) lblXClass.textContent = rngXClass.value + 'px';
+      if (lblYClass) lblYClass.textContent = rngYClass.value + 'px';
+      if (lblXAward) lblXAward.textContent = rngXAward.value + 'px';
+      if (lblYAward) lblYAward.textContent = rngYAward.value + 'px';
+
+      let targetStudent = null;
+      if (students.length > 0) {
+        if (selectedStudentIndex < 0 || selectedStudentIndex >= students.length) {
+          selectedStudentIndex = 0;
+        }
+        targetStudent = students[selectedStudentIndex];
+      } else {
+        targetStudent = {
+          HoTen: "Nguyễn Văn An",
+          mshs: "FPT001",
+          Lop: "11A3",
+          TenGiaiThuong: "Giải Nhất - Sáng Tạo Công Nghệ",
+          Email: "sample.student@example.com"
+        };
+      }
+
+      const generatedBase64 = generateCanvasCertificate(targetStudent);
+      
+      if (students.length > 0 && selectedStudentIndex >= 0) {
+        students[selectedStudentIndex].imageBase64 = generatedBase64;
+        renderTable();
+      }
+
+      const imgEl = document.getElementById('previewAwardImg');
+      const noImgEl = document.getElementById('previewNoImgPlaceholder');
+      if (imgEl) {
+        imgEl.src = generatedBase64;
+        imgEl.classList.remove('hidden');
+      }
+      if (noImgEl) {
+        noImgEl.classList.add('hidden');
+      }
+    }
+
+    function setupCanvasStudioControls() {
+      const controls = [
+        rngXName, rngYName, numSizeName, colName, alignName,
+        rngXMshs, rngYMshs, numSizeMshs, colMshs, alignMshs,
+        rngXClass, rngYClass, numSizeClass, colClass, alignClass,
+        rngXAward, rngYAward, numSizeAward, colAward, alignAward,
+        canvasFontSelect, canvasScaleSelect
+      ];
+
+      controls.forEach(ctrl => {
+        if (!ctrl) return;
+        ctrl.addEventListener('input', updateCanvasPreview);
+        ctrl.addEventListener('change', updateCanvasPreview);
+      });
+    }
+
+    function loadTemplateImage(file) {
       if (!file) return;
       const reader = new FileReader();
       reader.onload = function(evt) {
         const img = new Image();
         img.onload = () => {
           customTemplateImg = img;
-          hiddenCanvas.width = img.naturalWidth || 900;
-          hiddenCanvas.height = img.naturalHeight || 630;
-          alert('Đã tải phôi giấy khen thành công!');
-          if (selectedStudentIndex >= 0 && selectedStudentIndex < students.length) {
-            students[selectedStudentIndex].imageBase64 = generateCanvasCertificate(students[selectedStudentIndex]);
-            renderLivePreview();
-            renderTable();
-          }
+          const actualW = img.naturalWidth || img.width || 900;
+          const actualH = img.naturalHeight || img.height || 630;
+
+          updateSlidersRange(actualW, actualH);
+          updateCanvasPreview();
+          alert(`Đã nạp phôi thành công! Kích thước: ${actualW} x ${actualH}px.\nPhạm vi thanh trượt X & Y đã được mở khóa tự động.`);
         };
         img.src = evt.target.result;
       };
       reader.readAsDataURL(file);
+    }
+
+    document.getElementById('templateFileInput').addEventListener('change', function(e) {
+      loadTemplateImage(e.target.files[0]);
       e.target.value = '';
     });
 
     document.getElementById('btnResetDefaultCanvas').addEventListener('click', () => {
       customTemplateImg = null;
-      hiddenCanvas.width = 900;
-      hiddenCanvas.height = 630;
-      renderDefaultTemplateToCanvas();
-      alert('Đã đặt lại phôi thiết kế hoàng gia tiêu chuẩn!');
-      if (selectedStudentIndex >= 0 && selectedStudentIndex < students.length) {
-        students[selectedStudentIndex].imageBase64 = generateCanvasCertificate(students[selectedStudentIndex]);
-        renderLivePreview();
-        renderTable();
-      }
+      updateSlidersRange(900, 630);
+      updateCanvasPreview();
+      alert('Đã đặt lại phôi thiết kế hoàng gia tiêu chuẩn (900 x 630px)!');
     });
 
-    function renderDefaultTemplateToCanvas() {
+    function renderDefaultTemplateToCanvas(scale = 2, selectedFont = 'Times New Roman') {
       const w = hiddenCanvas.width;
       const h = hiddenCanvas.height;
 
       ctx.fillStyle = '#fffdf7';
       ctx.fillRect(0, 0, w, h);
 
-      ctx.lineWidth = 10;
+      ctx.lineWidth = 10 * scale;
       ctx.strokeStyle = '#b45309';
-      ctx.strokeRect(20, 20, w - 40, h - 40);
+      ctx.strokeRect(20 * scale, 20 * scale, w - 40 * scale, h - 40 * scale);
 
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 2 * scale;
       ctx.strokeStyle = '#1e3a8a';
-      ctx.strokeRect(32, 32, w - 64, h - 64);
+      ctx.strokeRect(32 * scale, 32 * scale, w - 64 * scale, h - 64 * scale);
 
       ctx.fillStyle = '#1e293b';
-      ctx.font = 'bold 22px Georgia, serif';
+      ctx.font = `bold ${20 * scale}px "${selectedFont}", serif`;
       ctx.textAlign = 'center';
-      ctx.fillText("BỘ GIÁO DỤC VÀ ĐÀO TẠO - TRƯỜNG THPT TIÊU BIỂU", w / 2, 75);
+      ctx.fillText("BỘ GIÁO DỤC VÀ ĐÀO TẠO - TRƯỜNG THPT TIÊU BIỂU".normalize('NFC'), w / 2, 75 * scale);
 
       ctx.fillStyle = '#b45309';
-      ctx.font = 'bold 44px Georgia, serif';
-      ctx.fillText("GIẤY KHEN THƯỞNG", w / 2, 140);
+      ctx.font = `bold ${42 * scale}px "${selectedFont}", serif`;
+      ctx.fillText("GIẤY KHEN THƯỞNG".normalize('NFC'), w / 2, 140 * scale);
 
       ctx.fillStyle = '#64748b';
-      ctx.font = 'italic 16px sans-serif';
-      ctx.fillText("Chứng nhận thành tích xuất sắc trong phong trào thi đua", w / 2, 175);
+      ctx.font = `italic ${15 * scale}px "${selectedFont}", sans-serif`;
+      ctx.fillText("Chứng nhận thành tích xuất sắc trong phong trào thi đua".normalize('NFC'), w / 2, 175 * scale);
 
-      ctx.font = '14px sans-serif';
+      ctx.font = `${13 * scale}px "${selectedFont}", sans-serif`;
       ctx.fillStyle = '#334155';
-      ctx.fillText("Hà Nội, ngày 20 tháng 11 năm 2026", w - 200, h - 120);
-      ctx.font = 'bold 16px sans-serif';
-      ctx.fillText("HIỆU TRƯỞNG", w - 200, h - 95);
-      ctx.font = 'italic 14px sans-serif';
+      ctx.fillText("Hà Nội, ngày 20 tháng 11 năm 2026".normalize('NFC'), w - (200 * scale), h - (120 * scale));
+      ctx.font = `bold ${15 * scale}px "${selectedFont}", sans-serif`;
+      ctx.fillText("HIỆU TRƯỞNG".normalize('NFC'), w - (200 * scale), h - (95 * scale));
+      ctx.font = `italic ${13 * scale}px "${selectedFont}", sans-serif`;
       ctx.fillStyle = '#64748b';
-      ctx.fillText("(Đã ký & đóng dấu)", w - 200, h - 45);
+      ctx.fillText("(Đã ký & đóng dấu)".normalize('NFC'), w - (200 * scale), h - (45 * scale));
 
       ctx.beginPath();
-      ctx.arc(150, h - 85, 45, 0, Math.PI * 2);
+      ctx.arc(150 * scale, h - (85 * scale), 45 * scale, 0, Math.PI * 2);
       ctx.fillStyle = '#fef3c7';
       ctx.fill();
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 3 * scale;
       ctx.strokeStyle = '#d97706';
       ctx.stroke();
 
-      ctx.font = 'bold 12px sans-serif';
+      ctx.font = `bold ${11 * scale}px "${selectedFont}", sans-serif`;
       ctx.fillStyle = '#b45309';
-      ctx.fillText("EXCELLENCE", 150, h - 80);
+      ctx.fillText("EXCELLENCE", 150 * scale, h - (80 * scale));
     }
 
+    // Hàm tạo ảnh Canvas chuẩn hóa tiếng Việt NFC, Tọa độ X/Y động, Font và Scale (VẼ MSHS)
     function generateCanvasCertificate(student) {
+      const scale = parseInt(canvasScaleSelect?.value || '2', 10);
+      const selectedFont = canvasFontSelect?.value || 'Times New Roman';
+
+      if (customTemplateImg) {
+        hiddenCanvas.width = (customTemplateImg.naturalWidth || customTemplateImg.width || 900) * scale;
+        hiddenCanvas.height = (customTemplateImg.naturalHeight || customTemplateImg.height || 630) * scale;
+      } else {
+        hiddenCanvas.width = 900 * scale;
+        hiddenCanvas.height = 630 * scale;
+      }
+
       const w = hiddenCanvas.width;
       const h = hiddenCanvas.height;
 
       if (customTemplateImg) {
         ctx.drawImage(customTemplateImg, 0, 0, w, h);
       } else {
-        renderDefaultTemplateToCanvas();
+        renderDefaultTemplateToCanvas(scale, selectedFont);
       }
 
-      ctx.textAlign = 'center';
-      const yName = parseInt(rngYName.value, 10);
-      const sizeName = parseInt(numSizeName.value, 10);
-      ctx.font = `bold ${sizeName}px Georgia, serif`;
+      // CHUẨN HÓA .normalize('NFC') TOÀN BỘ CÁC BIẾN CHỮ ĐỂ TRÁNH LỖI DẤU TIẾNG VIỆT
+      const rawName = student.HoTen || "Học Sinh Mẫu";
+      const rawMshs = student.mshs ? `${student.mshs}` : "";
+      const rawClass = `Học sinh Lớp: ${student.Lop || '11A3'}`;
+      const rawAward = student.TenGiaiThuong || "Giải Xuất Sắc";
+
+      const textName = String(rawName).normalize('NFC');
+      const textMshs = String(rawMshs).normalize('NFC');
+      const textClass = String(rawClass).normalize('NFC');
+      const textAward = String(rawAward).normalize('NFC');
+
+      // 1. VẼ HỌ TÊN
+      const xName = parseInt(rngXName.value, 10) * scale;
+      const yName = parseInt(rngYName.value, 10) * scale;
+      const sizeName = parseInt(numSizeName.value, 10) * scale;
+      ctx.textAlign = alignName?.value || 'center';
+      ctx.font = `bold ${sizeName}px "${selectedFont}", serif`;
       ctx.fillStyle = colName.value;
-      ctx.fillText(student.HoTen || "Học Sinh Mẫu", w / 2, yName);
+      ctx.fillText(textName, xName, yName);
 
-      const yClass = parseInt(rngYClass.value, 10);
-      const sizeClass = parseInt(numSizeClass.value, 10);
-      ctx.font = `italic 600 ${sizeClass}px sans-serif`;
+      // 2. VẼ MSHS (MÃ SỐ HỌC SINH NẾU CÓ)
+      if (textMshs) {
+        const xMshs = parseInt(rngXMshs.value, 10) * scale;
+        const yMshs = parseInt(rngYMshs.value, 10) * scale;
+        const sizeMshs = parseInt(numSizeMshs.value, 10) * scale;
+        ctx.textAlign = alignMshs?.value || 'center';
+        ctx.font = `600 ${sizeMshs}px "${selectedFont}", sans-serif`;
+        ctx.fillStyle = colMshs.value;
+        ctx.fillText(textMshs, xMshs, yMshs);
+      }
+
+      // 3. VẼ LỚP
+      const xClass = parseInt(rngXClass.value, 10) * scale;
+      const yClass = parseInt(rngYClass.value, 10) * scale;
+      const sizeClass = parseInt(numSizeClass.value, 10) * scale;
+      ctx.textAlign = alignClass?.value || 'center';
+      ctx.font = `italic 600 ${sizeClass}px "${selectedFont}", sans-serif`;
       ctx.fillStyle = colClass.value;
-      ctx.fillText(`Học sinh Lớp: ${student.Lop || '11A3'}`, w / 2, yClass);
+      ctx.fillText(textClass, xClass, yClass);
 
-      const yAward = parseInt(rngYAward.value, 10);
-      const sizeAward = parseInt(numSizeAward.value, 10);
-      ctx.font = `bold ${sizeAward}px Georgia, serif`;
+      // 4. VẼ TÊN GIẢI THƯỞNG
+      const xAward = parseInt(rngXAward.value, 10) * scale;
+      const yAward = parseInt(rngYAward.value, 10) * scale;
+      const sizeAward = parseInt(numSizeAward.value, 10) * scale;
+      ctx.textAlign = alignAward?.value || 'center';
+      ctx.font = `bold ${sizeAward}px "${selectedFont}", serif`;
       ctx.fillStyle = colAward.value;
-      ctx.fillText(student.TenGiaiThuong || "Giải Xuất Sắc", w / 2, yAward);
+      ctx.fillText(textAward, xAward, yAward);
 
-      return hiddenCanvas.toDataURL('image/png', 0.92);
+      return hiddenCanvas.toDataURL('image/png', 0.95);
     }
 
     function autoGenerateCertificatesForAll() {
@@ -1242,7 +1499,7 @@
       });
     }
 
-    document.getElementById('btnApplyCanvasAll').addEventListener('click', () => {
+    function applyCanvasToAll() {
       if (students.length === 0) {
         alert('Chưa có học sinh nào trong danh sách!');
         return;
@@ -1252,8 +1509,12 @@
       renderTable();
       renderLivePreview();
       updateStatistics();
-      alert(`Đã xuất ảnh giấy khen Canvas cho toàn bộ ${students.length} học sinh!`);
-    });
+      const scaleText = canvasScaleSelect?.options[canvasScaleSelect.selectedIndex]?.text || '2x';
+      const fontText = canvasFontSelect?.value || 'Times New Roman';
+      alert(`Đã xuất ảnh giấy khen sắc nét (${scaleText}, Font: ${fontText}) cho toàn bộ ${students.length} học sinh!`);
+    }
+
+    document.getElementById('btnApplyCanvasAll').addEventListener('click', applyCanvasToAll);
 
     // 9. QUẢN LÝ BỘ LỌC LỚP VÀ RENDER GIAO DIỆN
     function updateClassFilters() {
@@ -1329,8 +1590,13 @@
             <td class="py-2.5 px-3 text-center text-slate-400 font-mono">${s.originalIdx + 1}</td>
             <td class="py-2.5 px-3 font-semibold text-slate-700">${s.Lop}</td>
             <td class="py-2.5 px-3">
-              <div class="font-bold text-slate-900">${s.HoTen}</div>
-              <div class="text-[11px] text-slate-400 font-mono">${s.Email}</div>
+              <div class="font-bold text-slate-900 flex items-center gap-1.5">
+                ${s.HoTen}
+              </div>
+              <div class="flex items-center gap-1.5 text-[10px] text-slate-500 font-mono mt-0.5">
+                ${s.mshs ? `<span class="bg-slate-100 px-1 py-0.2 rounded border border-slate-200 text-slate-600 font-bold">MSHS: ${s.mshs}</span>` : ''}
+                <span class="text-slate-400">${s.Email}</span>
+              </div>
             </td>
             <td class="py-2.5 px-3 font-medium text-amber-700">${s.TenGiaiThuong}</td>
             <td class="py-2.5 px-3">${imageBadge}</td>
@@ -1370,11 +1636,12 @@
       if (elError) elError.textContent = error;
     }
 
-    // 10. LIVE EMAIL PREVIEW
+    // 10. LIVE EMAIL PREVIEW (HỖ TRỢ THAY THẾ BIẾN {{MSHS}})
     function interpolate(tpl, student) {
       if (!student) return tpl;
       return tpl
         .replace(/{{HoTen}}/g, student.HoTen || '')
+        .replace(/{{MSHS}}/g, student.mshs || '')
         .replace(/{{Lop}}/g, student.Lop || '')
         .replace(/{{TenGiaiThuong}}/g, student.TenGiaiThuong || '');
     }
@@ -1399,7 +1666,8 @@
       }
 
       const st = students[selectedStudentIndex];
-      if (recipientInfo) recipientInfo.textContent = `${st.HoTen} (${st.Lop}) - ${st.Email}`;
+      const mshsBadge = st.mshs ? `[${st.mshs}] ` : '';
+      if (recipientInfo) recipientInfo.textContent = `${st.HoTen} ${mshsBadge}(${st.Lop}) - ${st.Email}`;
       if (modalSubject) modalSubject.textContent = interpolate(rawSubject, st);
       if (htmlBody) htmlBody.innerHTML = interpolate(rawHtml, st);
 
@@ -1437,8 +1705,6 @@
     // =========================================================================
     // 12. GỬI MAIL ĐA CỔNG (GOOGLE WEBHOOK & MICROSOFT GRAPH LUÂN PHIÊN)
     // =========================================================================
-    
-    // Gửi qua Google Apps Script Webhook
     async function sendMailViaGoogleScript(student, subject, htmlBody) {
       const webhookUrl = document.getElementById('webhookUrlInput').value.trim();
       if (!webhookUrl) {
@@ -1480,13 +1746,11 @@
       return resJson;
     }
 
-    // Gửi qua Microsoft Outlook 365 (Microsoft Graph API với Token chỉ định)
     async function sendMailViaMicrosoftGraph(student, subject, htmlBody, token) {
       if (!token) {
         throw new Error('Thiếu Microsoft Graph Access Token!');
       }
 
-      // Đảm bảo có thẻ nhúng ảnh với contentId: awardImage
       if (student.imageBase64 && !htmlBody.includes('cid:awardImage')) {
         if (htmlBody.includes('cid:awardImg')) {
           htmlBody = htmlBody.replace(/cid:awardImg/g, 'cid:awardImage');
@@ -1529,7 +1793,6 @@
         "saveToSentItems": "true"
       };
 
-      // ĐẢM BẢO HEADER LUÔN CẬP NHẬT ĐÚNG TOKEN CỦA LƯỢT GỬI ĐÓ
       const response = await fetch('https://graph.microsoft.com/v1.0/me/sendMail', {
         method: 'POST',
         headers: {
@@ -1647,7 +1910,6 @@
           return;
         }
       } else {
-        // TÁCH TEXTAREA THÀNH MẢNG CÁC TOKENS HỢP LỆ
         tokens = getValidGraphTokens();
         if (tokens.length === 0) {
           alert('Vui lòng dán ít nhất 1 Access Token Microsoft Graph vào ô cấu hình!');
@@ -1673,7 +1935,6 @@
       let currentStep = 0;
       const totalSteps = targetList.length;
 
-      // VÒNG LẶP GỬI TUẦN TỰ KẾT HỢP LUÂN PHIÊN TOKEN
       for (let i = 0; i < targetList.length; i++) {
         const st = targetList[i];
 
@@ -1693,8 +1954,6 @@
             if (txtProgress) txtProgress.textContent = `${currentStep}/${totalSteps}`;
             await sendMailViaGoogleScript(st, subject, htmlBody);
           } else {
-            // THUẬT TOÁN MODULO (CHIA LẤY DƯ) ĐỂ CHỌN TOKEN LUÂN PHIÊN:
-            // Học sinh 1 (i=0) -> Token 0, Học sinh 2 (i=1) -> Token 1...
             const tokenIndex = i % tokens.length;
             const currentToken = tokens[tokenIndex];
 
@@ -1702,7 +1961,6 @@
               txtProgress.textContent = `${currentStep}/${totalSteps} (Token #${tokenIndex + 1})`;
             }
 
-            // Gửi với đúng Token đã chọn
             await sendMailViaMicrosoftGraph(st, subject, htmlBody, currentToken);
           }
 
